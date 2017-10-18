@@ -34,4 +34,17 @@
 # in the rails console. These commands should return the
 # user's enrollments and enrolled courses.
 class User < ApplicationRecord
+  validates :name, presence: true, uniqueness: true
+
+  has_many :enrollments,
+  class_name: :Enrollment,
+  primary_key: :id,
+  foreign_key: :student_id
+
+  has_many :courses,
+  class_name: :Course,
+  primary_key: :id,
+  foreign_key: :instructor_id
+
+  has_many :enrolled_courses, through: :enrollments, source: :course
 end
